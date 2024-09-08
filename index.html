@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+        .Info {
+            margin-top: 10px;
+        }
+        .button {
+            margin-top: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        .Container1, .Container2 {
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="Container1" id="Container1">
+    <div class="sidebar" id="sidebar">
+        <div class="circle">
+            <p class="circle1" id="circle1">1</p>
+            <p class="circle2" id="circle2">2</p>
+            <p class="circle3" id="circle3">3</p>
+            <p class="circle4" id="circle4">4</p>
+        </div>
+    </div>
+
+    <div class="steps">
+        <div class="step1" id="step1">
+            <h2>STEP 1</h2>
+            <span>YOUR INFO</span>
+        </div>
+
+        <div class="step1" id="step2">
+            <h2>STEP 2</h2>
+            <span>SELECT PLAN</span>
+        </div>
+
+        <div class="step1" id="step3">
+            <h2>STEP 3</h2>
+            <span>ADD-ONS</span>
+        </div>
+
+        <div class="step1" id="step4">
+            <h2>STEP 4</h2>
+            <span>SUMMARY</span>
+        </div>
+    </div>
+</div>
+
+<div class="Container2" id="Container2">
+    <form onsubmit="return validateForm()" id="personalInfoForm">
+        <div class="head" id="head">
+            <h1>Personal Info</h1>
+            <p class="description">Please provide your name, email, address, and phone number.</p>
+
+            <div class="Info">
+                <p>Name</p>
+                <span id="errorName" class="error"></span>
+            </div>
+            <input type="text" id="infoName" placeholder="e.g. Stephen King">
+
+            <div class="Info">
+                <p>Email Address</p>
+                <span id="errorMail" class="error"></span>
+            </div>
+            <input type="text" id="infoMail" placeholder="e.g. stephenKing@lorem.com">
+
+            <div class="Info">
+                <p>Phone Number</p>
+                <span id="errorNum" class="error"></span>
+            </div>
+            <input type="text" id="infoNum" placeholder="e.g. +1 234 567 890">
+
+            <div class="button">
+                <button type="submit" id="nextStepBtn">Next Step</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        // Clear previous error messages
+        document.getElementById('errorName').textContent = '';
+        document.getElementById('errorMail').textContent = '';
+        document.getElementById('errorNum').textContent = '';
+
+        // Get form values
+        const name = document.getElementById('infoName').value.trim();
+        const email = document.getElementById('infoMail').value.trim();
+        const phone = document.getElementById('infoNum').value.trim();
+
+        // Regular expressions for validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phonePattern = /^\+?\d{1,4}[\s.-]?\(?\d{1,4}\)?[\s.-]?\d{1,9}[\s.-]?\d{1,9}$/;
+
+        let isValid = true; // Initialize as true
+
+        // Validate Name
+        if (name === '') {
+            document.getElementById('errorName').textContent = 'Name is required';
+            isValid = false;
+        }
+
+        // Validate Email
+        if (email === '') {
+            document.getElementById('errorMail').textContent = 'Email is required';
+            isValid = false;
+        } else if (!emailPattern.test(email)) {
+            document.getElementById('errorMail').textContent = 'Invalid email address';
+            isValid = false;
+        }
+
+        // Validate Phone Number
+        if (phone === '') {
+            document.getElementById('errorNum').textContent = 'Phone number is required';
+            isValid = false;
+        } else if (!phonePattern.test(phone)) {
+            document.getElementById('errorNum').textContent = 'Invalid phone number';
+            isValid = false;
+        }
+
+        // Return the final validity status
+        return isValid;
+    }
+</script>
+
+</body>
+</html>
